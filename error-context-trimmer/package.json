@@ -1,0 +1,63 @@
+{
+  "name": "error-context-trimmer",
+  "displayName": "报错上下文裁剪器",
+  "description": "基于 DeepSeek 双层 Agent（主 Agent Manager + 子 Agent Worker）的报错上下文裁剪与诊断插件",
+  "version": "0.1.0",
+  "publisher": "local-dev",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "errorContextTrimmer.diagnoseError",
+        "title": "诊断当前报错（双层 Agent）",
+        "category": "报错上下文裁剪器"
+      },
+      {
+        "command": "errorContextTrimmer.setApiKey",
+        "title": "设置 DeepSeek API Key",
+        "category": "报错上下文裁剪器"
+      }
+    ],
+    "configuration": {
+      "title": "报错上下文裁剪器",
+      "properties": {
+        "errorContextTrimmer.apiKey": {
+          "type": "string",
+          "default": "",
+          "scope": "application",
+          "markdownDescription": "DeepSeek API Key（`sk-` 开头）。优先级：插件设置 > 环境变量 `DEEPSEEK_API_KEY`。"
+        },
+        "errorContextTrimmer.model": {
+          "type": "string",
+          "default": "deepseek-chat",
+          "description": "调用的模型名（Function Calling 需使用 deepseek-chat）。"
+        },
+        "errorContextTrimmer.mainMaxTurns": {
+          "type": "number",
+          "default": 8,
+          "minimum": 1,
+          "maximum": 30,
+          "description": "主 Agent 的最大循环轮数（防死循环）。"
+        },
+        "errorContextTrimmer.workerMaxTurns": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 20,
+          "description": "单个子 Agent 的最大循环轮数（防死循环）。"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "check": "node --check extension.js"
+  }
+}
