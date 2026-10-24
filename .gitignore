@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# packaged extension
+*.vsix
+
+# test artifacts
+.vscode-test/
+coverage/
+out/
+
+# logs & OS files
+*.log
+.DS_Store
+Thumbs.db
+
+# local secrets
+.env
+.env.*
